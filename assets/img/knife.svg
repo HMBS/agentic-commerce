@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img">
+  <defs>
+    <radialGradient id="knibg" cx="38%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#F6F1EA"/><stop offset="1" stop-color="#E4E4E1"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#knibg)"/>
+  <ellipse cx="300" cy="482" rx="180" ry="18" fill="#141413" opacity=".08"/>
+  <g transform="rotate(-24 300 300)">
+    <path d="M118 300h250c38 0 62 14 62 34s-24 34-62 34H118z" fill="#C9CCCE"/>
+    <path d="M118 300h250c38 0 62 14 62 34H118z" fill="#E7E9EA"/>
+    <path d="M118 300c26 22 26 46 0 68z" fill="#A9ADB0"/>
+    <rect x="430" y="292" width="30" height="84" rx="6" fill="#8E9194"/>
+    <path d="M460 296h92a16 16 0 0 1 16 16v44a16 16 0 0 1-16 16h-92z" fill="#241D19"/>
+    <g stroke="#F3F0EE" stroke-width="2" opacity=".28">
+      <path d="M470 320h80M470 336h80M470 352h80"/>
+    </g>
+  </g>
+  <g stroke="#F3F0EE" stroke-width="2.4" opacity=".5" stroke-linecap="round">
+    <path d="M170 430l-26 26"/><path d="M196 446l-26 26"/>
+  </g>
+</svg>

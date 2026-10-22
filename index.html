@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fitzwilliam Provisions — an agent-ready counter in Dublin 2</title>
+<meta name="description" content="Seven things we stand behind, a working age gate, and a machine-readable shelf. A storefront built as a test counter for agentic checkout.">
+<meta name="theme-color" content="#F3F0EE">
+<!-- which checkout route this deployment provides; the PHP build rewrites it -->
+<meta name="fv-api" content="/api/checkout">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141413'/%3E%3Ctext x='32' y='43' font-family='Helvetica,Arial' font-size='30' font-weight='600' fill='%23F3F0EE' text-anchor='middle'%3EFP%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/styles.css">
+<!--CATALOG_JSONLD-->
+</head>
+<body id="top">
+
+<a href="#main" style="position:absolute;left:-9999px;top:0;background:#141413;color:#F3F0EE;padding:12px 20px;border-radius:999px;z-index:999" onfocus="this.style.left='16px';this.style.top='16px'" onblur="this.style.left='-9999px'">Skip to content</a>
+
+<!-- ── Floating nav pill · DESIGN.md §3 Navigation ───────────────────────── -->
+<header class="nav-shell">
+  <nav class="nav" aria-label="Primary">
+    <a class="brand" href="#top">
+      <span class="brand__mark" aria-hidden="true">FP</span>
+      <span>Fitzwilliam <span class="brand__sub">/ Provisions</span></span>
+    </a>
+    <div class="nav__links">
+      <a href="#counter">Counter</a>
+      <a href="#wine">Wine</a>
+      <a href="#agents">For agents</a>
+      <a href="#how">How it works</a>
+    </div>
+    <div class="nav__tools">
+      <button class="cart-btn" type="button" data-cart-open aria-haspopup="dialog">
+        <span class="cart-btn__label">Basket</span>
+        <span class="cart-btn__count" data-cart-count>0</span>
+      </button>
+      <button class="menu-btn" type="button" data-menu-open aria-label="Open menu" aria-expanded="false">
+        <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="#141413" stroke-width="1.6"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-menu" data-mobile-menu aria-hidden="true">
+  <button class="mobile-menu__close" type="button" data-menu-close aria-label="Close menu">
+    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="#141413" stroke-width="1.6"/></svg>
+  </button>
+  <a href="#counter" data-menu-link>Counter</a>
+  <a href="#wine" data-menu-link>Wine &amp; age checks</a>
+  <a href="#agents" data-menu-link>For agents</a>
+  <a href="#how" data-menu-link>How it works</a>
+  <a href="/llms.txt" data-menu-link>llms.txt</a>
+</div>
+
+<main id="main">
+
+  <!-- ── Hero · stadium media frame, 40px corners, dark ground ─────────── -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__frame">
+      <svg class="hero__arc" viewBox="0 0 900 520" fill="none" aria-hidden="true">
+        <path d="M880 40C600 60 330 150 140 330" stroke="#F37338" stroke-width="1.4" opacity=".55"/>
+        <path d="M900 150C660 180 470 260 330 420" stroke="#F37338" stroke-width="1.2" opacity=".35"/>
+        <path d="M760 20C520 70 300 190 190 380" stroke="#F37338" stroke-width="1" opacity=".22"/>
+        <circle cx="142" cy="332" r="5" fill="#F37338" opacity=".7"/>
+        <circle cx="330" cy="422" r="3.4" fill="#F37338" opacity=".5"/>
+      </svg>
+      <p class="hero__ghost" aria-hidden="true">PROVISIONS</p>
+
+      <span class="hero__badge">Dublin 2 · est. 2019 · agent-ready</span>
+      <h1 id="hero-title">A counter that answers machines as politely as people.</h1>
+      <p class="hero__lede">Seven small-production things we stand behind, a working age gate, and a shelf that reads itself out in JSON. Built to be poked at by agents.</p>
+      <div class="hero__actions">
+        <a class="btn btn--creampill btn--wide" href="#counter">Shop the counter</a>
+        <a class="btn btn--onink btn--wide" href="#agents">Read the agent surface</a>
+      </div>
+      <div class="hero__meta">
+        <span><strong>7</strong> SKUs in stock</span>
+        <span><strong>2</strong> age-restricted</span>
+        <span><strong>EUR</strong> pricing, VAT included</span>
+        <span><strong>/.well-known/ucp</strong> published</span>
+      </div>
+    </div>
+
+    <div class="wrap rail" aria-label="Machine endpoints">
+      <span class="rail__item"><span class="rail__dot"></span><b>Discover</b> <span class="mono">/.well-known/ucp</span></span>
+      <span class="rail__item"><span class="rail__dot"></span><b>Catalog</b> <span class="mono">/catalog.json</span></span>
+      <span class="rail__item"><span class="rail__dot"></span><b>Checkout</b> <span class="mono">POST /api/checkout</span></span>
+      <span class="rail__item"><span class="rail__dot"></span><b>402 quote</b> <span class="mono">/api/agent/quote</span></span>
+    </div>
+  </section>
+
+  <!-- ── Products ───────────────────────────────────────────────────────── -->
+  <section class="section" id="counter" aria-labelledby="counter-title">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <span class="eyebrow">· The counter</span>
+          <h2 id="counter-title">Seven things, chosen once a season.</h2>
+        </div>
+        <p class="lede">Prices are what they cost. No member tier, no dark pattern, no drip pricing. Two lines need an age check before they can leave the shop, and that check is enforced by the API, not just the button.</p>
+      </div>
+
+      <div class="grid">
+        <!-- 1 -->
+        <article class="card" data-product-id="cof-yir-250" data-price="1850" data-restriction="">
+          <div class="card__media">
+            <img src="assets/img/coffee.svg" alt="A brown coffee bag with a cream label" width="600" height="600">
+          </div>
+          <div class="card__body">
+            <span class="card__eyebrow">Pantry</span>
+            <h3>Gasharu Yirgacheffe</h3>
+            <p class="card__sub">Washed, whole bean, 250 g</p>
+            <div class="card__notes">
+              <span class="chip">Jasmine</span><span class="chip">Bergamot</span><span class="chip">White peach</span>
+            </div>
+          </div>
+          <div class="card__foot">
+            <span class="price">€18.50 <span>incl. VAT</span></span>
+            <button class="btn btn--ink btn--sm js-add" type="button" data-add="cof-yir-250">Add</button>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="card" data-product-id="cho-sea-090" data-price="690" data-restriction="">
+          <div class="card__media">
+            <img src="assets/img/chocolate.svg" alt="A dark chocolate bar broken into squares" width="600" height="600">
+          </div>
+          <div class="card__body">
+            <span class="card__eyebrow">Pantry</span>
+            <h3>Sea Salt, Seventy</h3>
+            <p class="card__sub">Single origin cacao, 70%, 90 g</p>
+            <div class="card__notes">
+              <span class="chip">Trinitario</span><span class="chip">Fleur de sel</span>
+            </div>
+          </div>
+          <div class="card__foot">
+            <span class="price">€6.90 <span>incl. VAT</span></span>
+            <button class="btn btn--ink btn--sm js-add" type="button" data-add="cho-sea-090">Add</button>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="card" data-product-id="oil-kor-500" data-price="2200" data-restriction="">
+          <div class="card__media">
+            <img src="assets/img/olive-oil.svg" alt="A green olive oil bottle with a cream label" width="600" height="600">
+          </div>
+          <div class="card__body">
+            <span class="card__eyebrow">Pantry</span>
+            <h3>Koroneiki First Press</h3>
+            <p class="card__sub">Early harvest, 500 ml</p>
+            <div class="card__notes">
+              <span class="chip">Green almond</span><span class="chip">Peppery</span>
+            </div>
+          </div>
+          <div class="card__foot">
+            <span class="price">€22.00 <span>incl. VAT</span></span>
+            <button class="btn btn--ink btn--sm js-add" type="button" data-add="oil-kor-500">Add</button>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="card" data-product-id="kit-sour-001" data-price="3200" data-restriction="">
+          <div class="card__media">
+            <img src="assets/img/sourdough.svg" alt="A sourdough loaf beside a starter jar" width="600" height="600">
+          </div>
+          <div class="card__body">
+            <span class="card__eyebrow">Kitchen</span>
+            <h3>Sourdough Starter Kit</h3>
+            <p class="card__sub">Jar, stoneground rye, linen cloth</p>
+            <div class="card__notes">
+              <span class="chip">Day 1 culture</span><span class="chip">Rye fed</span>
+            </div>
+          </div>
+          <div class="card__foot">
+            <span class="price">€32.00 <span>incl. VAT</span></span>
+            <button class="btn btn--ink btn--sm js-add" type="button" data-add="kit-sour-001">Add</button>
+          </div>
+        </article>
+
+        <!-- 5 → age restricted: bladed article -->
+        <article class="card" data-product-id="kni-gyu-210" data-price="12900" data-restriction="bladed_article_18">
+          <div class="card__media">
+            <img src="assets/img/knife.svg" alt="A carbon steel chef knife laid diagonally" width="600" height="600">
+            <span class="card__flag">18+ · bladed article</span>
+          </div>
+          <div class="card__body">
+            <span class="card__eyebrow">Kitchen</span>
+            <h3>Carbon Steel Gyuto</h3>
+            <p class="card__sub">210 mm, wa-handle, Shirogami 2</p>
+            <div class="card__notes">
+              <span class="chip">Reactive steel</span><span class="chip chip--signal">ID on delivery</span>
+            </div>
+          </div>
+          <div class="card__foot">
+            <span class="price">€129.00 <span>incl. VAT</span></span>
+            <button class="btn btn--consent js-add js-age-add" type="button" data-add="kni-gyu-210" data-restriction="bladed_article_18">18+ · Confirm age</button>
+          </div>
+        </article>
+
+        <!-- 6 → age restricted: alcohol -->
+        <article class="card" data-product-id="win-pet-2023" data-price="2800" data-restriction="alcohol_18">
+          <div class="card__media">
+            <img src="assets/img/wine-petnat.svg" alt="An amber pét-nat bottle with a cream label" width="600" height="600">
+            <span class="card__flag">18+ · alcohol</span>
+          </div>
+          <div class="card__body">
+            <span class="card__eyebrow">Wine</span>
+            <h3>Loam &amp; Lilt Pét-Nat</h3>
+            <p class="card__sub">Skin contact, 2023, 75 cl</p>
+            <div class="card__notes">
+              <span class="chip">Volcanic soil</span><span class="chip">Unfined</span><span class="chip">11.5% ABV</span>
+            </div>
+          </div>
+          <div class="card__foot">
+            <span class="price">€28.00 <span>incl. VAT</span></span>
+            <button class="btn btn--consent js-add js-age-add" type="button" data-add="win-pet-2023" data-restriction="alcohol_18">18+ · Confirm age</button>
+          </div>
+        </article>
+
+        <!-- 7 → age restricted: alcohol, closing feature line -->
+        <article class="card card--feature" id="wine" data-product-id="win-bar-2019" data-price="4600" data-restriction="alcohol_18">
+          <div class="card__media">
+            <img src="assets/img/wine-barolo.svg" alt="A burgundy Barolo bottle with a cream label" width="600" height="600">
+            <span class="card__flag">18+ · alcohol</span>
+          </div>
+          <div class="card--feature__stack">
+            <div class="card__body">
+              <span class="card__eyebrow">Wine · the last of the cellar</span>
+              <h3>Barolo, Vigna Rionda</h3>
+              <p class="card__sub">Nebbiolo, 2019, 75 cl. Serralunga fruit, 48 months in large cask, released only when it stops being angry with you.</p>
+              <div class="card__notes">
+                <span class="chip">Serralunga</span><span class="chip">48-month élevage</span><span class="chip">14.5% ABV</span>
+              </div>
+            </div>
+            <div class="card__foot">
+              <span class="price">€46.00 <span>incl. VAT</span></span>
+              <button class="btn btn--consent js-add js-age-add" type="button" data-add="win-bar-2019" data-restriction="alcohol_18">18+ · Confirm age</button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Compliance strip — Signal Orange reserved for exactly this -->
+      <div class="age-note" id="age-panel">
+        <span class="age-note__icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 1.5l6.5 3v4.2c0 3.6-2.7 6.6-6.5 7.8-3.8-1.2-6.5-4.2-6.5-7.8V4.5z" stroke="currentColor" stroke-width="1.4"/><path d="M6 9l2.1 2.1L12.4 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <div class="age-note__copy">
+          <h3>Alcohol and bladed goods need a date of birth on file.</h3>
+          <p>Irish law requires us to verify 18 before these lines leave the shop. In this test build the gate is a single flag on the checkout request, and the API rejects restricted lines without it.</p>
+        </div>
+        <span class="age-note__state" data-age-state>Not verified</span>
+        <button class="btn btn--consent" type="button" data-age-open>Verify age</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Orbit · circular portraits with satellite CTAs and arcs ─────────── -->
+  <section class="section" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <div class="section__head">
+        <div>
+          <span class="eyebrow">· How an agent buys here</span>
+          <h2 id="how-title">Three steps, no shared secret.</h2>
+        </div>
+        <p class="lede">An agent reads the profile, prices a basket, and presents a payment credential. A human only appears when the shop asks for one, which here means the age gate.</p>
+      </div>
+
+      <div class="orbit-zone">
+        <svg class="orbit-arc" viewBox="0 0 1200 220" fill="none" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M90 96C330 30 720 24 1110 110" stroke="#F37338" stroke-width="1.3" opacity=".5"/>
+          <path d="M330 150C560 92 830 96 1010 168" stroke="#F37338" stroke-width="1" opacity=".3"/>
+        </svg>
+        <div class="orbit">
+          <div class="orbit__item">
+            <div class="orbit__disc">
+              <svg viewBox="0 0 300 300" aria-hidden="true">
+                <circle cx="150" cy="150" r="86" fill="none" stroke="#141413" stroke-width="1.2" opacity=".28"/>
+                <circle cx="150" cy="150" r="56" fill="none" stroke="#141413" stroke-width="1.2" opacity=".18"/>
+                <circle cx="150" cy="150" r="7" fill="#141413"/>
+                <circle cx="236" cy="150" r="5" fill="#F37338"/>
+                <path d="M150 150L236 150" stroke="#F37338" stroke-width="1.2" opacity=".7"/>
+                <text x="150" y="238" text-anchor="middle" font-family="Sofia Sans, sans-serif" font-size="12" font-weight="600" letter-spacing="3" fill="#141413" opacity=".55">DISCOVER</text>
+              </svg>
+              <a class="satellite" href="#agents" aria-label="See the discovery endpoint">
+                <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 13L13 5M6 5h7v7" stroke="#141413" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+            <div class="orbit__label">
+              <span class="orbit__num">01</span>
+              <h3>Read the profile</h3>
+              <p><span class="mono">GET /.well-known/ucp</span> lists capabilities, versions and payment handlers. No account, no key exchange.</p>
+            </div>
+          </div>
+
+          <div class="orbit__item">
+            <div class="orbit__disc">
+              <svg viewBox="0 0 300 300" aria-hidden="true">
+                <rect x="76" y="92" width="148" height="116" rx="16" fill="none" stroke="#141413" stroke-width="1.4" opacity=".35"/>
+                <rect x="76" y="118" width="148" height="14" fill="#141413" opacity=".65"/>
+                <rect x="96" y="148" width="52" height="8" rx="4" fill="#141413" opacity=".4"/>
+                <rect x="96" y="166" width="84" height="8" rx="4" fill="#141413" opacity=".22"/>
+                <circle cx="196" cy="172" r="14" fill="#F37338" opacity=".85"/>
+                <text x="150" y="238" text-anchor="middle" font-family="Sofia Sans, sans-serif" font-size="12" font-weight="600" letter-spacing="3" fill="#141413" opacity=".55">PRICE</text>
+              </svg>
+              <a class="satellite" href="#agents" aria-label="See the checkout endpoint">
+                <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 13L13 5M6 5h7v7" stroke="#141413" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+            <div class="orbit__label">
+              <span class="orbit__num">02</span>
+              <h3>Price the basket</h3>
+              <p><span class="mono">POST /api/checkout</span> returns line items, VAT and a session id. Restricted lines come back gated until age is asserted.</p>
+            </div>
+          </div>
+
+          <div class="orbit__item">
+            <div class="orbit__disc">
+              <svg viewBox="0 0 300 300" aria-hidden="true">
+                <path d="M150 84l58 30v64c0 30-24 54-58 68-34-14-58-38-58-68v-64z" fill="none" stroke="#141413" stroke-width="1.4" opacity=".38"/>
+                <path d="M124 148l18 18 36-38" stroke="#141413" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="212" cy="96" r="10" fill="#F37338" opacity=".9"/>
+                <text x="150" y="248" text-anchor="middle" font-family="Sofia Sans, sans-serif" font-size="12" font-weight="600" letter-spacing="3" fill="#141413" opacity=".55">SETTLE</text>
+              </svg>
+              <a class="satellite" href="#agents" aria-label="See the payment surface">
+                <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 13L13 5M6 5h7v7" stroke="#141413" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+            <div class="orbit__label">
+              <span class="orbit__num">03</span>
+              <h3>Present payment</h3>
+              <p>Card via the platform, or an x402 stablecoin credential from <span class="mono">/api/agent/quote</span>. The shop never sees a PAN.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Agent surface ──────────────────────────────────────────────────── -->
+  <section class="section" id="agents" aria-labelledby="agents-title">
+    <div class="wrap">
+      <div class="agent-split">
+        <div class="agent-copy">
+          <span class="eyebrow">· For agents</span>
+          <h2 id="agents-title">Everything on this page has a URL.</h2>
+          <p class="lede">The shelf is the same data the browser renders. Point a scraper or an agent runtime at these four endpoints and you have the whole shop.</p>
+          <ul class="agent-list">
+            <li><b><span class="mono">GET</span> /.well-known/ucp</b><span>Business profile: version, capabilities, payment handlers. Cached, no redirects.</span></li>
+            <li><b><span class="mono">GET</span> /catalog.json</b><span>Seven products with price in minor units, stock, and restriction codes.</span></li>
+            <li><b><span class="mono">POST</span> /api/checkout</b><span>Session pricing. Returns <span class="mono">422 age_verification_required</span> for gated lines.</span></li>
+            <li><b><span class="mono">GET</span> /api/agent/quote</b><span>402 Payment Required with an x402 v2 <span class="mono">accepts[]</span> array. Wire shape only, no facilitator.</span></li>
+          </ul>
+          <div class="hero__actions" style="margin-top:28px">
+            <a class="btn btn--ink btn--wide" href="/catalog.json" target="_blank" rel="noopener">Open catalog.json</a>
+            <a class="btn btn--wide" href="/llms.txt" target="_blank" rel="noopener">llms.txt</a>
+          </div>
+        </div>
+
+        <div class="codeblock">
+          <div class="codeblock__bar">
+            <span class="codeblock__name mono">GET /.well-known/ucp</span>
+            <button class="codeblock__copy" type="button" data-copy-ucp>Copy JSON</button>
+          </div>
+<pre data-ucp-json><span class="c">// served with Cache-Control: public, max-age=3600</span>
+{
+  "<span class="k">ucp</span>": {
+    "<span class="k">version</span>": "<span class="s">2026-04-08</span>",
+    "<span class="k">supported_versions</span>": [<span class="s">"2026-04-08"</span>],
+    "<span class="k">services</span>": {
+      "<span class="k">rest</span>": { "<span class="k">base_url</span>": "<span class="s">http://localhost:8088</span>" }
+    },
+    "<span class="k">capabilities</span>": {
+      "<span class="k">dev.ucp.shopping.cart</span>":     [<span class="s">"2026-04-08"</span>],
+      "<span class="k">dev.ucp.shopping.checkout</span>": [<span class="s">"2026-04-08"</span>],
+      "<span class="k">dev.ucp.shopping.catalog</span>":  [<span class="s">"2026-04-08"</span>]
+    },
+    "<span class="k">handlers</span>": {
+      "<span class="k">card</span>": { "<span class="k">scheme</span>": "<span class="s">platform_token</span>" },
+      "<span class="k">x402</span>": {
+        "<span class="k">scheme</span>": "<span class="s">exact</span>",
+        "<span class="k">network</span>": "<span class="s">eip155:8453</span>",
+        "<span class="k">settlement</span>": "<span class="s">unimplemented</span>"
+      }
+    },
+    "<span class="k">signing_keys</span>": []
+  }
+}</pre>
+          <p class="small" style="color:rgba(243,240,238,.45);margin-top:18px">Illustrative profile for local testing. Not a conformance claim.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ── Footer · ink block, conversational H2, 4-column grid ─────────────── -->
+<footer class="footer">
+  <div class="footer__inner">
+    <h2>Ask us anything, including as a machine.</h2>
+    <p class="footer__lede">We answer the phone between 9 and 6, and the API always. Fitzwilliam Lane, Dublin 2.</p>
+    <div class="footer__cta">
+      <a class="btn btn--creampill btn--wide" href="mailto:counter@fitzwilliam.test">Write to the counter</a>
+      <a class="btn btn--onink btn--wide" href="#agents">Agent documentation</a>
+    </div>
+
+    <div class="footer__grid">
+      <div class="footer__col">
+        <h3>Shop</h3>
+        <ul>
+          <li><a href="#counter">Everything in stock</a></li>
+          <li><a href="#wine">Wine &amp; spirits</a></li>
+          <li><a href="#counter">Kitchen</a></li>
+          <li><a href="#counter">Pantry</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h3>For agents</h3>
+        <ul>
+          <li><a href="/.well-known/ucp" target="_blank" rel="noopener">UCP profile ↗</a></li>
+          <li><a href="/catalog.json" target="_blank" rel="noopener">catalog.json ↗</a></li>
+          <li><a href="/llms.txt" target="_blank" rel="noopener">llms.txt ↗</a></li>
+          <li><a href="/api/agent/quote" target="_blank" rel="noopener">402 quote ↗</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h3>Need help</h3>
+        <ul>
+          <li><a href="#how">How checkout works</a></li>
+          <li><a href="#age-panel">Age verification</a></li>
+          <li><a href="mailto:counter@fitzwilliam.test">Returns &amp; breakage</a></li>
+          <li><a href="#top">Delivery in Dublin</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="#age-panel">Alcohol licensing</a></li>
+          <li><a href="#age-panel">Age-restricted goods</a></li>
+          <li><a href="#top">Terms of sale</a></li>
+          <li><a href="#top">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2026 Fitzwilliam Provisions Ltd. · 14 Fitzwilliam Lane, Dublin 2 · VAT IE 1234567 A</span>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <button class="footer__locale" type="button">Ireland · English · EUR
+          <svg width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+        </button>
+        <div class="footer__social">
+          <a href="#top" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1.5" y="1.5" width="13" height="13" rx="4" stroke="currentColor" stroke-width="1.2"/><circle cx="8" cy="8" r="3.2" stroke="currentColor" stroke-width="1.2"/><circle cx="12" cy="4" r=".9" fill="currentColor"/></svg></a>
+          <a href="#top" aria-label="Mastodon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 11V6a3 3 0 013-3h6a3 3 0 013 3v5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M2 11c0 1.8 1.6 3 4 3M14 11c0 1.8-1.6 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></a>
+          <a href="#top" aria-label="RSS"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="3.5" cy="12.5" r="1.4" fill="currentColor"/><path d="M2 7a7 7 0 017 7M2 2a12 12 0 0112 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ── Basket drawer ────────────────────────────────────────────────────── -->
+<div class="scrim" data-scrim></div>
+<aside class="drawer" data-drawer role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true">
+  <div class="drawer__head">
+    <h2 id="drawer-title">Basket</h2>
+    <button class="drawer__close" type="button" data-cart-close aria-label="Close basket">
+      <svg width="13" height="13" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="#141413" stroke-width="1.6"/></svg>
+    </button>
+  </div>
+  <div class="tabs" role="tablist" aria-label="Basket views">
+    <button class="tab" type="button" role="tab" id="tab-basket" aria-controls="panel-basket" aria-selected="true" data-tab="basket">Basket</button>
+    <button class="tab" type="button" role="tab" id="tab-agent" aria-controls="panel-agent" aria-selected="false" data-tab="agent">Agent payload</button>
+  </div>
+  <div class="drawer__body">
+    <div id="panel-basket" role="tabpanel" aria-labelledby="tab-basket" data-panel="basket">
+      <div data-cart-items></div>
+    </div>
+    <div id="panel-agent" role="tabpanel" aria-labelledby="tab-agent" data-panel="agent" hidden>
+      <p class="small" style="margin-bottom:12px">This is the exact body <span class="mono">POST /api/checkout</span> receives, including the age assertion.</p>
+      <pre class="agent-json" data-agent-json></pre>
+    </div>
+  </div>
+  <div class="drawer__foot">
+    <div class="totals"><strong data-cart-total>€0.00</strong><span data-cart-meta>0 items · VAT included</span></div>
+    <p class="small" data-gate-warning hidden style="color:var(--signal);font-size:13px;margin-top:4px">Age-restricted lines in this basket. Verify before checkout.</p>
+    <button class="btn btn--ink btn--block btn--wide" type="button" data-checkout>Checkout</button>
+    <p class="small" style="margin-top:12px;text-align:center">Test mode. No payment is taken, no order is placed.</p>
+  </div>
+</aside>
+
+<!-- ── Age gate modal ───────────────────────────────────────────────────── -->
+<div class="modal-shell" data-age-modal role="dialog" aria-modal="true" aria-labelledby="age-title">
+  <div class="modal">
+    <button class="modal__close" type="button" data-age-close aria-label="Close">
+      <svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="#141413" stroke-width="1.6"/></svg>
+    </button>
+    <span class="eyebrow eyebrow--signal">· Age-restricted goods</span>
+    <h2 id="age-title" style="margin-top:14px">Confirm you are 18 or over.</h2>
+    <p>Wine and bladed kitchen goods cannot be sold or delivered to anyone under 18 in Ireland. We ask once per session; a delivery driver may still ask for ID at the door.</p>
+    <div class="modal__actions">
+      <button class="btn btn--consent" type="button" data-age-confirm>I am 18 or over</button>
+      <button class="btn btn--ghost" type="button" data-age-close>Not now</button>
+    </div>
+    <p class="modal__legal">Test build: your answer sets <span class="mono">age_verified: true</span> on the checkout request and is stored in local storage. Nothing is sent to a verification provider. Do not use this pattern in production; a real shop needs an age-verification service and a recorded audit trail.</p>
+  </div>
+</div>
+
+<!-- ── Checkout receipt modal ───────────────────────────────────────────── -->
+<div class="modal-shell" data-receipt-modal role="dialog" aria-modal="true" aria-labelledby="receipt-title">
+  <div class="modal modal--wide">
+    <button class="modal__close" type="button" data-receipt-close aria-label="Close">
+      <svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="#141413" stroke-width="1.6"/></svg>
+    </button>
+    <span class="eyebrow">· Counter response</span>
+    <h2 id="receipt-title" style="margin-top:14px" data-receipt-title>Checkout session</h2>
+    <p data-receipt-summary></p>
+    <div class="receipt__label">Response body <span data-receipt-status class="mono" style="text-transform:none;letter-spacing:0;color:var(--ink)"></span></div>
+    <pre class="receipt" data-receipt-body></pre>
+    <div class="modal__actions">
+      <button class="btn btn--ink" type="button" data-receipt-close>Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" data-toast role="status" aria-live="polite"></div>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>

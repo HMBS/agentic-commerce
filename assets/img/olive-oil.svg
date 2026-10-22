@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img">
+  <defs>
+    <radialGradient id="oilbg" cx="38%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#F6F1EA"/><stop offset="1" stop-color="#E3E6DA"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#oilbg)"/>
+  <ellipse cx="300" cy="486" rx="120" ry="18" fill="#141413" opacity=".09"/>
+  <path d="M270 118h60v58l38 54c10 14 14 28 14 44v186a26 26 0 0 1-26 26H244a26 26 0 0 1-26-26V274c0-16 4-30 14-44l38-54z" fill="#3C4630"/>
+  <path d="M250 300h100v164a14 14 0 0 1-14 14h-72a14 14 0 0 1-14-14z" fill="#B79A45" opacity=".55"/>
+  <rect x="262" y="112" width="76" height="26" rx="6" fill="#141413"/>
+  <rect x="238" y="318" width="124" height="112" rx="4" fill="#F3F0EE"/>
+  <path d="M262 344h76M262 360h58" stroke="#141413" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+  <circle cx="300" cy="392" r="16" fill="none" stroke="#141413" stroke-width="3"/>
+  <path d="M292 400q8-14 16 0" stroke="#141413" stroke-width="3" fill="none"/>
+  <g stroke="#F3F0EE" stroke-width="2" opacity=".35" stroke-linecap="round">
+    <path d="M266 250h24"/><path d="M266 264h40"/><path d="M266 278h20"/>
+  </g>
+</svg>

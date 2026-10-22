@@ -1,0 +1,97 @@
+{
+  "merchant": {
+    "name": "Fitzwilliam Provisions",
+    "legal_name": "Fitzwilliam Provisions Ltd.",
+    "address": "14 Fitzwilliam Lane, Dublin 2, D02 XR20, Ireland",
+    "currency": "EUR",
+    "domain": "localhost:8088",
+    "support_email": "counter@fitzwilliam.test",
+    "age_policy": "18+ for alcohol and bladed kitchen goods. Ireland (Intoxicating Liquor Act 2003; Criminal Justice (Miscellaneous Provisions) Act 2009)."
+  },
+  "products": [
+    {
+      "id": "cof-yir-250",
+      "sku": "FV-COF-001",
+      "name": "Gasharu Yirgacheffe",
+      "subtitle": "Washed, whole bean, 250 g",
+      "category": "pantry",
+      "price": 1850,
+      "restriction": null,
+      "stock": 42,
+      "image": "assets/img/coffee.svg",
+      "notes": ["Jasmine", "Bergamot", "White peach"]
+    },
+    {
+      "id": "cho-sea-090",
+      "sku": "FV-CHO-002",
+      "name": "Sea Salt, Seventy",
+      "subtitle": "Single origin cacao, 70%, 90 g",
+      "category": "pantry",
+      "price": 690,
+      "restriction": null,
+      "stock": 118,
+      "image": "assets/img/chocolate.svg",
+      "notes": ["Trinitario", "Fleur de sel", "Long finish"]
+    },
+    {
+      "id": "oil-kor-500",
+      "sku": "FV-OIL-003",
+      "name": "Koroneiki First Press",
+      "subtitle": "Early harvest, 500 ml",
+      "category": "pantry",
+      "price": 2200,
+      "restriction": null,
+      "stock": 27,
+      "image": "assets/img/olive-oil.svg",
+      "notes": ["Green almond", "Peppery", "Kalamata"]
+    },
+    {
+      "id": "kit-sour-001",
+      "sku": "FV-KIT-004",
+      "name": "Sourdough Starter Kit",
+      "subtitle": "Jar, stoneground rye, linen cloth",
+      "category": "kitchen",
+      "price": 3200,
+      "restriction": null,
+      "stock": 15,
+      "image": "assets/img/sourdough.svg",
+      "notes": ["Day 1 culture", "Rye fed", "Cloth wrap"]
+    },
+    {
+      "id": "kni-gyu-210",
+      "sku": "FV-KNI-005",
+      "name": "Carbon Steel Gyuto",
+      "subtitle": "210 mm, wa-handle, Shirogami 2",
+      "category": "kitchen",
+      "price": 12900,
+      "restriction": "bladed_article_18",
+      "stock": 6,
+      "image": "assets/img/knife.svg",
+      "notes": ["Reactive steel", "Octagonal handle", "18+"]
+    },
+    {
+      "id": "win-pet-2023",
+      "sku": "FV-WIN-006",
+      "name": "Loam & Lilt Pét-Nat",
+      "subtitle": "Skin contact, 2023, 75 cl",
+      "category": "wine",
+      "price": 2800,
+      "restriction": "alcohol_18",
+      "stock": 24,
+      "image": "assets/img/wine-petnat.svg",
+      "notes": ["Volcanic soil", "Unfined", "11.5% ABV"]
+    },
+    {
+      "id": "win-bar-2019",
+      "sku": "FV-WIN-007",
+      "name": "Barolo, Vigna Rionda",
+      "subtitle": "Nebbiolo, 2019, 75 cl",
+      "category": "wine",
+      "price": 4600,
+      "restriction": "alcohol_18",
+      "stock": 9,
+      "image": "assets/img/wine-barolo.svg",
+      "notes": ["Serralunga", "48-month élevage", "14.5% ABV"]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: fitzwilliam-provisions-mcp
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python3 mcp_server.py
+    healthCheckPath: /health
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: STORE_URL
+        value: https://store.leobo.me
+      - key: PYTHON_VERSION
+        value: 3.12.6

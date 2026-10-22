@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img">
+  <defs>
+    <radialGradient id="cofbg" cx="38%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#F6F1EA"/><stop offset="1" stop-color="#E7DFD5"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#cofbg)"/>
+  <ellipse cx="300" cy="470" rx="150" ry="22" fill="#141413" opacity=".08"/>
+  <path d="M215 168h170l16 250a34 34 0 0 1-34 36H233a34 34 0 0 1-34-36z" fill="#1E1B18"/>
+  <path d="M215 168h170l3 46H212z" fill="#2C2823"/>
+  <rect x="234" y="258" width="132" height="124" rx="6" fill="#F3F0EE"/>
+  <circle cx="300" cy="290" r="15" fill="none" stroke="#141413" stroke-width="3.4"/>
+  <path d="M289 290c5-8 17-8 22 0" stroke="#141413" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+  <text x="300" y="333" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" letter-spacing="1.2" fill="#141413">YIRGACHEFFE</text>
+  <text x="300" y="356" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="10.5" letter-spacing="1.2" fill="#6B6560">250 G · WASHED</text>
+  <g fill="#4A2A18">
+    <ellipse cx="150" cy="404" rx="24" ry="17" transform="rotate(-18 150 404)"/>
+    <ellipse cx="196" cy="436" rx="24" ry="17" transform="rotate(12 196 436)"/>
+    <ellipse cx="438" cy="430" rx="24" ry="17" transform="rotate(24 438 430)"/>
+  </g>
+  <g stroke="#F3F0EE" stroke-width="2.5" stroke-linecap="round" opacity=".7">
+    <path d="M132 410q18-8 36-4"/><path d="M180 440q18-8 36-4"/><path d="M422 436q18-8 36-4"/>
+  </g>
+</svg>

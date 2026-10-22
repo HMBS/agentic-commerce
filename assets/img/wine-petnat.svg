@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img">
+  <defs>
+    <radialGradient id="petbg" cx="38%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#F6F1EA"/><stop offset="1" stop-color="#EDE3D4"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#petbg)"/>
+  <ellipse cx="300" cy="492" rx="110" ry="18" fill="#141413" opacity=".09"/>
+  <path d="M276 96h48v92c34 16 54 44 54 82v196a24 24 0 0 1-24 24H246a24 24 0 0 1-24-24V270c0-38 20-66 54-82z" fill="#7C5A2A"/>
+  <path d="M270 108h60v18h-60z" fill="#141413"/>
+  <path d="M268 120h64v10h-64z" fill="#C9A227"/>
+  <path d="M250 300h100v150a18 18 0 0 1-18 18h-64a18 18 0 0 1-18-18z" fill="#C08A3E" opacity=".5"/>
+  <rect x="238" y="316" width="124" height="128" rx="6" fill="#F3F0EE"/>
+  <text x="300" y="356" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="17" letter-spacing="3" fill="#141413">LOAM</text>
+  <text x="300" y="378" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="17" letter-spacing="3" fill="#141413">LILT</text>
+  <path d="M266 394h68" stroke="#CF4500" stroke-width="3"/>
+  <text x="300" y="418" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="12" letter-spacing="2" fill="#6B6560">PET-NAT 2023</text>
+  <g fill="#F3F0EE" opacity=".55">
+    <circle cx="284" cy="266" r="4"/><circle cx="304" cy="246" r="3"/><circle cx="322" cy="270" r="3.5"/><circle cx="292" cy="228" r="2.5"/>
+  </g>
+</svg>

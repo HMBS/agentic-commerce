@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img">
+  <defs>
+    <radialGradient id="chobg" cx="38%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#F6F1EA"/><stop offset="1" stop-color="#E9DED3"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#chobg)"/>
+  <ellipse cx="300" cy="470" rx="160" ry="20" fill="#141413" opacity=".08"/>
+  <g>
+    <rect x="150" y="170" width="300" height="270" rx="10" fill="#2E160F"/>
+    <rect x="163" y="183" width="274" height="244" rx="6" fill="#4A2417"/>
+    <g fill="#5B2E1D">
+      <rect x="176" y="196" width="78" height="70" rx="4"/><rect x="262" y="196" width="78" height="70" rx="4"/><rect x="348" y="196" width="78" height="70" rx="4"/>
+      <rect x="176" y="274" width="78" height="70" rx="4"/><rect x="262" y="274" width="78" height="70" rx="4"/><rect x="348" y="274" width="78" height="70" rx="4"/>
+      <rect x="176" y="352" width="78" height="70" rx="4"/><rect x="262" y="352" width="78" height="70" rx="4"/><rect x="348" y="352" width="78" height="70" rx="4"/>
+    </g>
+    <path d="M150 170h300l-14 26H164z" fill="#F3F0EE" opacity=".16"/>
+  </g>
+  <g fill="#F3F0EE" opacity=".85">
+    <circle cx="198" cy="214" r="3.2"/><circle cx="292" cy="236" r="2.6"/><circle cx="380" cy="210" r="3"/>
+    <circle cx="222" cy="300" r="2.4"/><circle cx="340" cy="316" r="3.4"/><circle cx="276" cy="380" r="2.8"/>
+    <circle cx="400" cy="372" r="2.4"/><circle cx="186" cy="392" r="2.2"/><circle cx="318" cy="286" r="2"/>
+  </g>
+</svg>

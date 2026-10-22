@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img">
+  <defs>
+    <radialGradient id="barbg" cx="38%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#F6F1EA"/><stop offset="1" stop-color="#E8DCDC"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#barbg)"/>
+  <ellipse cx="300" cy="496" rx="112" ry="18" fill="#141413" opacity=".1"/>
+  <path d="M278 92h44v96c30 18 48 46 48 82v200a22 22 0 0 1-22 22H252a22 22 0 0 1-22-22V270c0-36 18-64 48-82z" fill="#3E141B"/>
+  <path d="M272 92h56v14h-56z" fill="#7A2C33"/>
+  <path d="M300 92h28v96c30 18 48 46 48 82v200a22 22 0 0 1-22 22h-54z" fill="#4E1A22" opacity=".6"/>
+  <rect x="234" y="296" width="132" height="140" rx="4" fill="#F3F0EE"/>
+  <path d="M252 322h96" stroke="#CF4500" stroke-width="2"/>
+  <text x="300" y="356" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="20" letter-spacing="3" fill="#141413">BAROLO</text>
+  <text x="300" y="376" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="11" letter-spacing="2" fill="#6B6560">VIGNA RIONDA</text>
+  <text x="300" y="410" text-anchor="middle" font-family="Helvetica,Arial,sans-serif" font-size="13" letter-spacing="4" fill="#141413">2019</text>
+  <circle cx="300" cy="288" r="10" fill="none" stroke="#F3F0EE" stroke-width="2" opacity=".35"/>
+</svg>
