@@ -50,6 +50,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 import server as store  # noqa: E402  (catalog + price_basket + llms_txt)
+import catalog_source  # noqa: E402  (optional Supabase catalog)
 
 PROTOCOL_VERSION = "2025-06-18"
 SUPPORTED_PROTOCOL_VERSIONS = ("2025-06-18", "2025-03-26", "2024-11-05")
@@ -63,7 +64,8 @@ STORE_PORT = 8088
 # image URLs at 10.0.2.2:8088 rather than localhost.
 STORE_URL: str | None = None
 
-CATEGORIES = sorted({p["category"] for p in store.PRODUCTS.values()})
+def categories() -> list[str]:
+    return sorted({p["category"] for p in store.PRODUCTS.values()})
 
 # Search words a shopper uses that do not appear in the product's own copy.
 ALIASES = {
@@ -188,10 +190,11 @@ def category_arg(args: dict) -> str | None:
     value = args.get("category")
     if value is None:
         return None
-    if not isinstance(value, str) or value not in CATEGORIES:
+    available = categories()
+    if not isinstance(value, str) or value not in available:
         raise RpcError(
             -32602,
-            f"category must be one of: {', '.join(CATEGORIES)}.",
+            f"category must be one of: {', '.join(available)}.",
         )
     return value
 
@@ -211,7 +214,7 @@ def tool_profile(base: str, mcp_url: str) -> dict:
         "merchant": store.MERCHANT,
         "currency": store.MERCHANT["currency"],
         "product_count": len(store.PRODUCTS),
-        "categories": CATEGORIES,
+        "categories": categories(),
         "age_policy": store.MERCHANT["age_policy"],
         "money": "Minor units (euro cents), VAT-inclusive.",
         "store_url": f"{base}/",
@@ -229,7 +232,7 @@ def tool_profile(base: str, mcp_url: str) -> dict:
     return tool_result(
         profile,
         f"{store.MERCHANT['name']}: {len(store.PRODUCTS)} products, "
-        f"{len(CATEGORIES)} categories, prices in {store.MERCHANT['currency']}.",
+        f"{len(categories())} categories, prices in {store.MERCHANT['currency']}.",
     )
 
 
@@ -266,7 +269,9 @@ def score_product(product: dict, terms: list[str]) -> int:
     subtitle = product["subtitle"].lower()
     notes = " ".join(product["notes"]).lower()
     category = product["category"].lower()
-    alias = " ".join(ALIASES.get(product["id"], [])).lower()
+    alias = " ".join(
+        [*product.get("aliases", []), *ALIASES.get(product["id"], [])]
+    ).lower()
     sku = product["sku"].lower()
     pid = product["id"].lower()
 
@@ -457,8 +462,7 @@ TOOLS = [
             "properties": {
                 "category": {
                     "type": "string",
-                    "enum": CATEGORIES,
-                    "description": "Only return this category.",
+                    "description": "Only return this category (for example pantry, wine or kitchen).",
                 },
                 "in_stock_only": {
                     "type": "boolean",
@@ -503,7 +507,7 @@ TOOLS = [
                 },
                 "category": {
                     "type": "string",
-                    "enum": CATEGORIES,
+                    "description": "Optional category filter.",
                 },
                 "in_stock_only": {
                     "type": "boolean",
@@ -757,6 +761,10 @@ def handle_rpc(message, handler: BaseHTTPRequestHandler):
     if not isinstance(params, dict):
         raise RpcError(-32602, "params must be an object.")
 
+    # Keep the shelf fresh without making the app redeploy for each product.
+    # This is a no-op unless Supabase is configured.
+    catalog_source.ensure_fresh(store)
+
     base = store_base(handler)
     # The MCP URL is only used in the profile payload; derive it from the
     # request instead of guessing the scheme/port.
@@ -852,6 +860,7 @@ class McpHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         path = self._path()
         if path == "/health":
+            catalog = catalog_source.status(store)
             self._send_json(
                 200,
                 {
@@ -860,7 +869,9 @@ class McpHandler(BaseHTTPRequestHandler):
                     "version": SERVER_VERSION,
                     "protocolVersion": PROTOCOL_VERSION,
                     "products": len(store.PRODUCTS),
-                    "categories": CATEGORIES,
+                    "categories": categories(),
+                    "catalogSource": catalog.source,
+                    "catalogError": catalog.error,
                     "transport": "streamable-http",
                     "endpoint": "/mcp",
                 },
@@ -967,11 +978,17 @@ def main():
     args = ap.parse_args()
     STORE_URL = args.store_url
 
+    catalog = catalog_source.ensure_fresh(store, force=True)
+    catalog_line = f"  catalog       {catalog.source} ({catalog.product_count} products)"
+    if catalog.error:
+        catalog_line += f" — {catalog.error}"
+
     srv = ThreadingHTTPServer((args.host, args.port), McpHandler)
     print(f"Fitzwilliam Provisions MCP → http://{args.host}:{args.port}/mcp")
     print(f"  health        /health")
     print(f"  tools         {', '.join(t['name'] for t in TOOLS)}")
     print(f"  store base    {STORE_URL or f'http://<request host>:{STORE_PORT}'}")
+    print(catalog_line)
     try:
         srv.serve_forever()
     except KeyboardInterrupt:

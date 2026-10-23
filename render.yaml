@@ -11,5 +11,13 @@ services:
         value: 0.0.0.0
       - key: STORE_URL
         value: https://store.leobo.me
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_PRODUCTS_TABLE
+        value: products
+      - key: CATALOG_CACHE_SECONDS
+        value: "5"
       - key: PYTHON_VERSION
         value: 3.12.6

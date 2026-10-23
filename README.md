@@ -102,10 +102,11 @@ restriction codes. That is the piece worth testing against a real agent runtime.
 ## MCP server
 
 `mcp_server.py` exposes the same shelf over the Model Context Protocol
-(Streamable HTTP, JSON-RPC 2.0). It reuses `products.json` and `price_basket()`
-from `server.py`, so discovery, VAT arithmetic and the 18+ gate cannot drift
-from the storefront. It is a separate process because a static bundle cannot run
-Python.
+(Streamable HTTP, JSON-RPC 2.0). By default it reuses `products.json` and
+`price_basket()` from `server.py`, so offline discovery, VAT arithmetic and the
+18+ gate cannot drift from the storefront. It is a separate process because a
+static bundle cannot run Python. For a live catalog, it can read Supabase
+instead; see below.
 
 ```bash
 python3 mcp_server.py                    # http://127.0.0.1:8090/mcp
@@ -161,6 +162,45 @@ address the device can reach while keeping their paths and fragments. Saved
 values persist across app launches and take precedence over the build-time
 defaults.
 
+### Supabase catalog (live products)
+
+`products.json` remains the offline fallback, but the POC can use Supabase as
+the live source of truth. The MCP process refreshes from Supabase on a short
+cache, so adding a row in the dashboard does not require redeploying the app or
+the MCP service.
+
+1. Create a free Supabase project.
+2. In the SQL editor, run `supabase/setup.sql` (or run `schema.sql` and
+   `seed.sql` separately).
+3. Create a public Storage bucket named `product-images` for new imagery, and
+   put its public URLs in `products.image_url`.
+4. Set these environment variables wherever the MCP server runs:
+
+   ```text
+   SUPABASE_URL=https://<project>.supabase.co
+   SUPABASE_ANON_KEY=<anon public key>
+   SUPABASE_PRODUCTS_TABLE=products
+   CATALOG_CACHE_SECONDS=5
+   ```
+
+   The anon key is read-only through the RLS policy in `schema.sql`. Do not put
+   the service-role key in the Android app.
+
+5. Start the server normally:
+
+   ```bash
+   SUPABASE_URL=... SUPABASE_ANON_KEY=... python3 mcp_server.py
+   ```
+
+The server prints the active catalog source and falls back to the last good
+shelf if Supabase is temporarily unreachable. `GET /health` reports
+`catalogSource` and `catalogError`.
+
+To add a product during a demo, insert a row in the Supabase **Table Editor**
+with an id, SKU, name, category, `price_minor`, stock, image URL and optional
+`age_restriction` / `search_tags`. After the cache TTL, the app sees it on the
+next shelf reload—no APK build and no MCP redeploy.
+
 ### Deploy the MCP server to Render
 
 The repository includes `render.yaml` for a free Render web service. Push this
@@ -172,6 +212,8 @@ the service with:
 - Start command: `python3 mcp_server.py`
 - Health check: `/health`
 - Environment: `HOST=0.0.0.0`, `STORE_URL=https://store.leobo.me`
+- Optional live catalog: `SUPABASE_URL`, `SUPABASE_ANON_KEY`,
+  `SUPABASE_PRODUCTS_TABLE=products`, `CATALOG_CACHE_SECONDS=5`
 - Python: `3.12.6`
 
 Change `STORE_URL` in `render.yaml` if the storefront lives somewhere else.
@@ -181,6 +223,12 @@ After the deploy finishes, the endpoint is:
 https://<service-name>.onrender.com/mcp
 ```
 
+The current deployment is:
+
+```text
+https://fitzwilliam-provisions-mcp.onrender.com/mcp
+```
+
 Put that in the app under **Settings → Shop → Shop connections → MCP server
 URL**, then use **Test**.
 
@@ -188,17 +236,23 @@ Render's free web services sleep after 15 minutes without traffic and take
 about a minute to wake, so the first Shop request after idle can be slow. The
 service is stateless and needs no database or persistent disk.
 
-For a preconfigured build, Gradle properties still set those initial defaults:
+The Helping Bee build defaults already point at the deployed MCP endpoint above
+and at `https://store.leobo.me`. Gradle properties can still override those
+initial values, which is useful for CI or a preconfigured APK:
 
 ```bash
+# Default: Render MCP + https://store.leobo.me
+./gradlew :app:assembleDebug
+
 ./gradlew :app:assembleDebug \
   -PSHOP_MCP_URL=http://host:8090/mcp \
   -PSHOP_STOREFRONT_URL=http://host:8088 \
   -PSTRIPE_BACKEND_URL=http://host:4242
 ```
 
-The debug defaults are `http://10.0.2.2:8090/mcp`, `http://10.0.2.2:8088` and
-`http://10.0.2.2:4242`.
+The app's built-in defaults point at the hosted MCP, the production storefront
+and the Render Stripe test backend. There are no local service defaults left;
+the Gradle properties above are only for overrides.
 
 ## Age gate: three layers, one of them honest
 

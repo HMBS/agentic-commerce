@@ -84,6 +84,13 @@ def ucp_profile(base: str) -> dict:
     }
 
 
+def product_image(base: str, image: str) -> str:
+    """Keep CDN/storage URLs absolute; root relative paths at the storefront."""
+    if image.startswith(("http://", "https://")):
+        return image
+    return f"{base}/{image.lstrip('/')}"
+
+
 def catalog_doc(base: str) -> dict:
     return {
         "merchant": MERCHANT,
@@ -107,7 +114,7 @@ def catalog_doc(base: str) -> dict:
                 "requires_age_verification": p["restriction"] is not None,
                 "vat_rate": VAT_RATE.get(p["category"], 0.23),
                 "url": f"{base}/index.html#counter",
-                "image": f"{base}/{p['image']}",
+                "image": product_image(base, p["image"]),
                 "flavour_notes": p["notes"],
             }
             for p in PRODUCTS.values()
